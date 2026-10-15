@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Y2K//ARCHIVE is a single-page application: every section is served from the
+# same document and reached through client-side routes. A sitemap.xml is served
+# from the site root.

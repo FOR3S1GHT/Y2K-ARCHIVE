@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Playfair+Display:ital,wght@1,400..700&display=swap');
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   Y2K//ARCHIVE — design tokens.
+   Colours, type scale and motion live here so the rest of the project
+   is written with Tailwind utilities only.
+   ------------------------------------------------------------------ */
+@theme {
+  --color-ink: #09090d;
+  --color-graphite: #18191f;
+  --color-chrome: #c8cdd3;
+  --color-metallic: #f4f4f6;
+  --color-electric: #2855ff;
+  /* A lighter tint of Electric Blue. #2855FF only reaches 3.6:1 on the ink
+     background, which fails WCAG AA for body text, so small text uses this. */
+  --color-electric-soft: #6b8cff;
+  --color-cyber: #00f0ff;
+  --color-hotpink: #ff3cac;
+  --color-holo: #b6a4ff;
+
+  --font-display: 'Anton', 'Arial Narrow', 'Haettenschweiler', sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Consolas', monospace;
+  --font-editorial: 'Playfair Display', 'Times New Roman', serif;
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-marquee-slow: marquee 70s linear infinite;
+  --animate-signal: signal 1.6s ease-in-out infinite;
+  --animate-drift: drift 9s ease-in-out infinite;
+  --animate-blink: blink 1.05s steps(2, start) infinite;
+  --animate-scan: scan 7s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes signal {
+    0%,
+    100% {
+      opacity: 0.25;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-7px);
+    }
+  }
+  @keyframes blink {
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes scan {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(1200%);
+    }
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scrollbar-color: var(--color-graphite) var(--color-ink);
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-chrome);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-electric);
+    color: var(--color-metallic);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-cyber);
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2c2e37;
+    border: 2px solid var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #41444f;
+  }
+}
+
+/* A faint CRT sweep — reserved for a couple of hero surfaces. */
+@utility scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0.035) 0px,
+    rgb(255 255 255 / 0.035) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* Chrome-plated text treatment used for large display words. */
+@utility chrome-plate {
+  background-image: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #d8dde3 34%,
+    #8f959e 52%,
+    #f4f4f6 66%,
+    #a9aeb6 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Fine blueprint grid used behind interface panels. */
+@utility tech-grid {
+  background-image:
+    linear-gradient(to right, rgb(200 205 211 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(200 205 211 / 0.07) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
